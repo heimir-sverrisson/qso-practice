@@ -43,7 +43,7 @@ def read_code(wpm=25, fwpm=15):
                 break
     if prev_flags is not None:
         termios.tcsetattr(sys.stdin.fileno(), termios.TCSADRAIN, prev_flags)
-    return buf
+    return buf.replace(" ", "").lower()
 
 
 if __name__ == "__main__":

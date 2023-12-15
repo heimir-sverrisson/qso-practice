@@ -1,3 +1,5 @@
+from pathlib import Path
+import json
 import random
 import send_code as sc
 import string
@@ -404,6 +406,23 @@ def get_persona(country):
         "qth": _make_location(country),
     }
     return persona
+
+
+OPERATOR_FILE_NAME = "~/.local_operator.json"
+
+
+def get_local_persona():
+    persona_file = Path(OPERATOR_FILE_NAME).expanduser()
+    if persona_file.exists():
+        persona = {}
+        with open(persona_file, "r") as f:
+            persona = json.load(f)
+        return persona
+    else:
+        persona = get_persona("usa")
+        with open(persona_file, "w+") as f:
+            json.dump(persona, f)
+        return persona
 
 
 if __name__ == "__main__":

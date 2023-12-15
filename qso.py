@@ -18,12 +18,16 @@ if __name__ == "__main__":
         print("Country must be USA or Iceland")
         sys.exit(1)
     persona = ps.get_persona(country)
+    local_persona = ps.get_local_persona()
     while True:
         send_cq(persona)
         response = rc.read_code()
         print()
-        if persona["call_sign"] in response.lower() and "w1ant" in response.lower():
+        if persona["call_sign"] in response and local_persona["call_sign"] in response:
             print("Both call signs correct!")
             break
         else:
-            print(f"Did not hear {persona['call_sign']} or w1ant in response.")
+            print(
+                # f"Did not hear {persona['call_sign']} or {local_persona['call_sign']} in response."
+                f"Did not hear call signs in the response."
+            )
